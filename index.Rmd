@@ -51,6 +51,6 @@ barstacked = barstacked + geom_text(size = 2,
                                        position = position_stack(vjust = 0.6),
                                        aes(label = percent (share,accuracy = 0.1)))
 barstacked = barstacked + scale_y_continuous(labels = percent) + labs(title= 'Airbnb Rating by Location')
-barstacked
+barstacked + labs(fill = "xxx")
 ```
 
