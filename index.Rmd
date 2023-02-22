@@ -1,0 +1,54 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+
+loading data 
+```{r}
+location='https://github.com/543DataVisual/deliverable2/raw/main/'
+file='airbnb_final.csv'
+link=paste0(location,file)
+
+airbnb_data=read.csv(link)
+```
+library packages
+```{r}
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+library(magrittr)
+library(scales)
+```
+Aggregate Data
+```{r}
+(airbnb_locrating=table(airbnb_data$low_rating,airbnb_data$address))
+
+```
+```{r}
+(locrating_col=prop.table(airbnb_locrating, margin = 2) %>% round(.,1))
+(rating_address = as.data.frame(airbnb_locrating))
+as.data.frame(locrating_col)
+rating_address$share = as.data.frame(locrating_col)[,3]
+rating_address
+```
+```{r}
+names(rating_address)[1:3] = c("rating","location","counts")
+rating_address
+```
+Plot
+```{r}
+basel = ggplot(data=rating_address,
+aes(x=location, y=share, fill=reorder(rating,share)))
+barstacked = basel + geom_bar(stat = 'identity', position = 'stack')
+barstacked = barstacked + geom_text(size = 2,
+                                       position = position_stack(vjust = 0.6),
+                                       aes(label = percent (share,accuracy = 0.1)))
+barstacked = barstacked + scale_y_continuous(labels = percent) + labs(title= 'Airbnb Rating by Location')
+barstacked
+```
+
