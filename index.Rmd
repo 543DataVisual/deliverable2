@@ -13,7 +13,7 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 loading data 
 ```{r}
 location='https://github.com/543DataVisual/deliverable2/raw/main/'
-file='airbnb_final.csv'
+file='airbnb_final_data.csv'
 link=paste0(location,file)
 
 airbnb_data=read.csv(link)
@@ -51,6 +51,6 @@ barstacked = barstacked + geom_text(size = 2,
                                        position = position_stack(vjust = 0.6),
                                        aes(label = percent (share,accuracy = 0.1)))
 barstacked = barstacked + scale_y_continuous(labels = percent) + labs(title= 'Airbnb Rating by Location')
-barstacked + labs(fill = "xxx")
+barstacked + labs(fill = "Rating Scale")
 ```
 
